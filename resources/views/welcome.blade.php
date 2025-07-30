@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NoFvckingCoffee - Kopi Premium Indonesia</title>
+    <title>Arpul - Creative Coffee Compound</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,8 +13,8 @@
     <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vite CSS -->
+    @vite(['resources/css/app.css'])
 
     <style>
         body { 
@@ -92,21 +92,21 @@
     <div class="relative min-h-screen overflow-hidden">
         <!-- Header -->
         <header class="absolute top-0 left-0 right-0 z-20 bg-black bg-opacity-20 backdrop-blur-sm" data-aos="fade-down" data-aos-duration="1000">
-            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="font-brand text-4xl text-coffee-cream">
-                    <a href="/" class="flex items-center space-x-2">
-                        <span class="text-coffee-gold">☕</span>
-                        <span>NOFVCKINGCOFFEE</span>
+            <nav class="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
+                <div class="font-brand text-2xl sm:text-3xl lg:text-4xl text-coffee-cream">
+                    <a href="/" class="flex items-center space-x-2 sm:space-x-3">
+                        <img src="{{ asset('images/logo/arpul.PNG') }}" alt="Arpul Logo" class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain">
+                        <span class="hidden sm:inline">ARPUL</span>
                     </a>
                 </div>
                 <div class="text-coffee-cream">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="font-semibold hover:text-coffee-gold transition duration-300 bg-coffee-primary px-4 py-2 rounded-lg">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}" class="font-semibold hover:text-coffee-gold transition duration-300 bg-coffee-primary px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base">Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}" class="font-semibold hover:text-coffee-gold transition duration-300 mr-4">Masuk</a>
+                            <a href="{{ route('login') }}" class="font-semibold hover:text-coffee-gold transition duration-300 mr-2 sm:mr-4 text-sm sm:text-base">Masuk</a>
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="font-semibold bg-coffee-primary hover:bg-coffee-dark py-2 px-6 rounded-lg transition duration-300 border-2 border-coffee-gold">Daftar</a>
+                                <a href="{{ route('register') }}" class="font-semibold bg-coffee-primary hover:bg-coffee-dark py-2 px-3 sm:px-6 rounded-lg transition duration-300 border-2 border-coffee-gold text-sm sm:text-base">Daftar</a>
                             @endif
                         @endauth
                     @endif
@@ -124,26 +124,26 @@
                 </div>
 
                 <!-- Floating Coffee Elements -->
-                <div class="absolute top-20 left-10 text-6xl text-coffee-gold animate-float" style="animation-delay: 0s;">☕</div>
-                <div class="absolute top-40 right-20 text-4xl text-coffee-cream animate-float" style="animation-delay: 2s;">🫘</div>
-                <div class="absolute bottom-32 left-20 text-5xl text-coffee-gold animate-float" style="animation-delay: 4s;">☕</div>
+                <div class="absolute top-16 sm:top-20 left-4 sm:left-10 text-4xl sm:text-5xl lg:text-6xl text-coffee-gold animate-float hidden sm:block" style="animation-delay: 0s;">☕</div>
+                <div class="absolute top-32 sm:top-40 right-4 sm:right-20 text-2xl sm:text-3xl lg:text-4xl text-coffee-cream animate-float hidden md:block" style="animation-delay: 2s;">🫘</div>
+                <div class="absolute bottom-24 sm:bottom-32 left-4 sm:left-20 text-3xl sm:text-4xl lg:text-5xl text-coffee-gold animate-float hidden sm:block" style="animation-delay: 4s;">☕</div>
 
                 <!-- Content -->
-                <div class="relative z-10 text-coffee-cream px-4 max-w-4xl">
-                    <div class="font-elegant text-2xl md:text-3xl mb-4 text-coffee-gold" data-aos="fade-down" data-aos-duration="1000">
-                        EST. 2024 • KOPI PREMIUM INDONESIA
+                <div class="relative z-10 text-coffee-cream px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+                    <div class="font-elegant text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 text-coffee-gold" data-aos="fade-down" data-aos-duration="1000">
+                        EST. 2020 • CREATIVE COFFEE COMPOUND
                     </div>
-                    <h1 class="font-brand text-7xl md:text-9xl mb-6 leading-tight text-coffee-cream" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
+                    <h1 class="font-brand text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-6 leading-tight text-coffee-cream" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="300">
                         KOPI TANPA BASA-BASI
                     </h1>
-                    <p class="font-elegant text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-coffee-cream leading-relaxed" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600">
+                    <p class="font-elegant text-base sm:text-lg md:text-xl lg:text-2xl mb-8 max-w-4xl mx-auto text-coffee-cream leading-relaxed" data-aos="fade-up" data-aos-duration="1200" data-aos-delay="600">
                         Rasakan cita rasa kopi Indonesia terbaik tanpa drama. Dari biji pilihan hingga cangkir Anda, setiap tegukan adalah kopi yang jujur dan berkualitas tinggi.
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="900">
-                        <a href="{{ route('register') }}" class="bg-coffee-primary hover:bg-coffee-dark text-coffee-cream font-bold py-4 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 border-2 border-coffee-gold">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="900">
+                        <a href="{{ route('register') }}" class="w-full sm:w-auto bg-coffee-primary hover:bg-coffee-dark text-coffee-cream font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-base sm:text-lg transition duration-300 transform hover:scale-105 border-2 border-coffee-gold text-center">
                             GABUNG SEKARANG
                         </a>
-                        <a href="{{ route('login') }}" class="bg-transparent hover:bg-coffee-primary text-coffee-cream font-bold py-4 px-8 rounded-lg text-lg transition duration-300 border-2 border-coffee-cream hover:border-coffee-gold">
+                        <a href="{{ route('login') }}" class="w-full sm:w-auto bg-transparent hover:bg-coffee-primary text-coffee-cream font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg text-base sm:text-lg transition duration-300 border-2 border-coffee-cream hover:border-coffee-gold text-center">
                             LIHAT MENU
                         </a>
                     </div>
@@ -151,41 +151,41 @@
             </div>
 
             <!-- Features Section -->
-            <section class="py-16 bg-coffee-secondary">
-                <div class="container mx-auto px-6">
-                    <h2 class="font-brand text-5xl text-center text-coffee-cream mb-12" data-aos="fade-up">KENAPA PILIH KAMI</h2>
-                    <div class="grid md:grid-cols-3 gap-8">
+            <section class="py-12 sm:py-16 bg-coffee-secondary">
+                <div class="container mx-auto px-4 sm:px-6">
+                    <h2 class="font-brand text-3xl sm:text-4xl lg:text-5xl text-center text-coffee-cream mb-8 sm:mb-12" data-aos="fade-up">KENAPA PILIH KAMI</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
                         <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-                            <div class="text-6xl mb-4 text-coffee-gold">🌱</div>
-                            <h3 class="font-elegant text-2xl text-coffee-cream mb-4">Biji Kopi Premium</h3>
-                            <p class="text-coffee-cream opacity-90">Dipilih langsung dari perkebunan kopi terbaik Indonesia dan dunia.</p>
+                            <div class="text-4xl sm:text-5xl lg:text-6xl mb-4 text-coffee-gold">🌱</div>
+                            <h3 class="font-elegant text-lg sm:text-xl lg:text-2xl text-coffee-cream mb-3 sm:mb-4">Biji Kopi Premium</h3>
+                            <p class="text-coffee-cream opacity-90 text-sm sm:text-base leading-relaxed">Dipilih langsung dari perkebunan kopi terbaik Indonesia dan dunia.</p>
                         </div>
                         <div class="text-center" data-aos="fade-up" data-aos-delay="400">
-                            <div class="text-6xl mb-4 text-coffee-gold">👨‍🍳</div>
-                            <h3 class="font-elegant text-2xl text-coffee-cream mb-4">Barista Ahli</h3>
-                            <p class="text-coffee-cream opacity-90">Tenaga profesional yang menyajikan setiap cangkir dengan presisi dan perhatian.</p>
+                            <div class="text-4xl sm:text-5xl lg:text-6xl mb-4 text-coffee-gold">👨‍🍳</div>
+                            <h3 class="font-elegant text-lg sm:text-xl lg:text-2xl text-coffee-cream mb-3 sm:mb-4">Barista Ahli</h3>
+                            <p class="text-coffee-cream opacity-90 text-sm sm:text-base leading-relaxed">Tenaga profesional yang menyajikan setiap cangkir dengan presisi dan perhatian.</p>
                         </div>
                         <div class="text-center" data-aos="fade-up" data-aos-delay="600">
-                            <div class="text-6xl mb-4 text-coffee-gold">🏪</div>
-                            <h3 class="font-elegant text-2xl text-coffee-cream mb-4">Suasana Nyaman</h3>
-                            <p class="text-coffee-cream opacity-90">Ruang hangat dan ramah yang sempurna untuk bekerja, meeting, atau bersantai.</p>
+                            <div class="text-4xl sm:text-5xl lg:text-6xl mb-4 text-coffee-gold">🏪</div>
+                            <h3 class="font-elegant text-lg sm:text-xl lg:text-2xl text-coffee-cream mb-3 sm:mb-4">Suasana Nyaman</h3>
+                            <p class="text-coffee-cream opacity-90 text-sm sm:text-base leading-relaxed">Ruang hangat dan ramah yang sempurna untuk bekerja, meeting, atau bersantai.</p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- Menu Preview Section -->
-            <section class="py-20 bg-gradient-to-b from-[#2F1B14] to-[#4A2C2A]">
-                <div class="container mx-auto px-6">
-                    <div class="text-center mb-16">
-                        <h2 class="font-brand text-6xl text-coffee-cream mb-4" data-aos="fade-up">MENU PILIHAN</h2>
-                        <p class="font-elegant text-xl text-coffee-gold max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+            <section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-[#2F1B14] to-[#4A2C2A]">
+                <div class="container mx-auto px-4 sm:px-6">
+                    <div class="text-center mb-12 sm:mb-16">
+                        <h2 class="font-brand text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-coffee-cream mb-4" data-aos="fade-up">MENU PILIHAN</h2>
+                        <p class="font-elegant text-base sm:text-lg lg:text-xl text-coffee-gold max-w-3xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200">
                             Nikmati koleksi kopi dan makanan terbaik kami yang dibuat dengan cinta dan keahlian tinggi
                         </p>
                     </div>
 
                     <!-- Menu Categories -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
                         <!-- Coffee Menu -->
                         <div data-aos="fade-right" data-aos-delay="300">
                             <div class="menu-card bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl shadow-2xl overflow-hidden border-4 border-amber-400 animate-glow">
@@ -286,15 +286,15 @@
                     </div>
 
                     <!-- Call to Action -->
-                    <div class="text-center" data-aos="zoom-in" data-aos-delay="600">
-                        <div class="bg-gradient-to-r from-coffee-primary to-coffee-secondary rounded-2xl p-8 border-4 border-coffee-gold shadow-2xl max-w-2xl mx-auto">
-                            <h3 class="font-brand text-4xl text-coffee-cream mb-4">SIAP MENIKMATI?</h3>
-                            <p class="text-coffee-gold mb-6 font-elegant text-lg">Bergabunglah dengan komunitas pecinta kopi sejati dan rasakan pengalaman kopi terbaik</p>
-                            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                                <a href="{{ route('register') }}" class="bg-coffee-gold hover:bg-[#B8860B] text-[#2F1B14] font-bold py-3 px-8 rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    <div class="text-center px-4" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="bg-gradient-to-r from-coffee-primary to-coffee-secondary rounded-2xl p-6 sm:p-8 border-4 border-coffee-gold shadow-2xl max-w-3xl mx-auto">
+                            <h3 class="font-brand text-2xl sm:text-3xl lg:text-4xl text-coffee-cream mb-4">SIAP MENIKMATI?</h3>
+                            <p class="text-coffee-gold mb-6 font-elegant text-base sm:text-lg leading-relaxed">Bergabunglah dengan komunitas pecinta kopi sejati dan rasakan pengalaman kopi terbaik</p>
+                            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                                <a href="{{ route('register') }}" class="w-full sm:w-auto bg-coffee-gold hover:bg-[#B8860B] text-[#2F1B14] font-bold py-3 px-6 sm:px-8 rounded-lg text-base sm:text-lg transition duration-300 transform hover:scale-105 shadow-lg">
                                     🚀 DAFTAR SEKARANG
                                 </a>
-                                <a href="{{ route('login') }}" class="bg-transparent hover:bg-coffee-gold hover:text-[#2F1B14] text-coffee-cream font-bold py-3 px-8 rounded-lg text-lg transition duration-300 border-2 border-coffee-gold">
+                                <a href="{{ route('login') }}" class="w-full sm:w-auto bg-transparent hover:bg-coffee-gold hover:text-[#2F1B14] text-coffee-cream font-bold py-3 px-6 sm:px-8 rounded-lg text-base sm:text-lg transition duration-300 border-2 border-coffee-gold">
                                     👀 LIHAT MENU LENGKAP
                                 </a>
                             </div>

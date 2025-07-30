@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-brand text-3xl leading-tight text-[#F5DEB3]" style="font-family: 'Bebas Neue', sans-serif;">
-            📊 LAPORAN PENJUALAN NOFVCKINGCOFFEE
+            📊 LAPORAN PENJUALAN ARPUL
         </h2>
     </x-slot>
 
@@ -15,7 +15,7 @@
                         <h1 class="text-4xl font-brand text-[#2F1B14] mb-2" style="font-family: 'Bebas Neue', sans-serif;">
                             💰 LAPORAN PENJUALAN
                         </h1>
-                        <p class="text-[#8B4513] font-medium">Analisis lengkap transaksi NoFvckingCoffee</p>
+                        <p class="text-[#8B4513] font-medium">Analisis lengkap transaksi Arpul</p>
                     </div>
 
                     @php
@@ -26,7 +26,7 @@
                     <!-- Filter Section -->
                     <div class="bg-white rounded-xl p-6 mb-8 border-2 border-[#DAA520] shadow-lg">
                         <h3 class="font-brand text-xl text-[#2F1B14] mb-4">🔍 FILTER LAPORAN</h3>
-                        <form method="GET" action="{{ route('reports.index') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <form method="GET" action="{{ route('admin.reports.index') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-[#8B4513] font-medium mb-2">Tanggal Mulai</label>
                                 <input type="date" 
@@ -91,7 +91,7 @@
                                      class="absolute z-10 mt-2 bg-white rounded-lg shadow-lg border-2 border-[#DAA520] p-4 min-w-[200px]">
                                     
                                     <!-- PDF Export -->
-                                    <form action="{{ route('reports.export') }}" method="POST" class="mb-2">
+                                    <form action="{{ route('admin.reports.export') }}" method="POST" class="mb-2">
                                         @csrf
                                         <input type="hidden" name="start_date" value="{{ request('start_date', $startDate ?? '') }}">
                                         <input type="hidden" name="end_date" value="{{ request('end_date', $endDate ?? '') }}">
@@ -117,7 +117,7 @@
                                              class="mt-2 space-y-1">
                                              
                                             <!-- Detailed CSV -->
-                                            <form action="{{ route('reports.export') }}" method="POST">
+                                            <form action="{{ route('admin.reports.export') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="start_date" value="{{ request('start_date', $startDate ?? '') }}">
                                                 <input type="hidden" name="end_date" value="{{ request('end_date', $endDate ?? '') }}">
@@ -130,7 +130,7 @@
                                             </form>
                                             
                                             <!-- Summary CSV -->
-                                            <form action="{{ route('reports.export') }}" method="POST">
+                                            <form action="{{ route('admin.reports.export') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="start_date" value="{{ request('start_date', $startDate ?? '') }}">
                                                 <input type="hidden" name="end_date" value="{{ request('end_date', $endDate ?? '') }}">

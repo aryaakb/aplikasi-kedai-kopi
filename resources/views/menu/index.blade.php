@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-brand text-3xl leading-tight">
-            MENU NOFVCKINGCOFFEE
+            MENU ARPUL
         </h2>
     </x-slot>
 
@@ -34,7 +34,7 @@
                             <div class="p-6">
                                 <h3 class="font-brand text-2xl text-[#F5DEB3] mb-6 text-center">🔥 KOPI TANPA DRAMA 🔥</h3>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    @foreach($products as $product)
+                                    @forelse($products as $product)
                                         @php
                                             $inCartQty = $cart[$product->id]['quantity'] ?? 0;
                                             $availableStock = $product->stock - $inCartQty;
@@ -47,6 +47,13 @@
                                                 <div class="absolute top-2 right-2 bg-[#8B4513] text-[#F5DEB3] px-2 py-1 rounded-full text-xs font-bold">
                                                     ☕ Premium
                                                 </div>
+                                                <!-- Favorite Button -->
+                                                <button onclick="toggleFavorite({{ $product->id }})" 
+                                                        class="absolute top-2 left-2 favorite-btn-{{ $product->id }} {{ Auth::user()->hasFavorite($product) ? 'text-red-500' : 'text-white' }} hover:text-red-500 bg-black bg-opacity-50 rounded-full p-2 transition-colors duration-300">
+                                                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                                    </svg>
+                                                </button>
                                             </div>
                                             <div class="p-4 flex-grow flex flex-col">
                                                 <h4 class="font-bold text-xl text-[#2F1B14] mb-2">{{ $product->name }}</h4>
@@ -83,7 +90,13 @@
                                                 </form>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <div class="col-span-full text-center py-12">
+                                            <div class="text-6xl mb-4">☕</div>
+                                            <h4 class="text-2xl font-brand text-[#F5DEB3] mb-2">Belum Ada Menu</h4>
+                                            <p class="text-[#DAA520]">Produk sedang dalam persiapan. Silakan kembali lagi nanti!</p>
+                                        </div>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
@@ -213,4 +226,54 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript for AJAX favorites -->
+    <script>
+        function toggleFavorite(productId) {
+            fetch(`/favorites/toggle/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update button visual state
+                const btn = document.querySelector(`.favorite-btn-${productId}`);
+                if (data.status === 'added') {
+                    btn.classList.remove('text-white');
+                    btn.classList.add('text-red-500');
+                } else {
+                    btn.classList.remove('text-red-500');
+                    btn.classList.add('text-white');
+                }
+                
+                showToast(data.message, data.status === 'added' ? 'success' : 'info');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('Terjadi kesalahan', 'error');
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            // Simple toast notification
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-semibold z-50 transition-all duration-300 ${
+                type === 'success' ? 'bg-green-500' :
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+    </script>
 </x-app-layout>

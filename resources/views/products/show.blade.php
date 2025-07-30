@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-brand text-3xl leading-tight text-[#F5DEB3]">
-            ☕ DETAIL PRODUK NOFVCKINGCOFFEE
+            ☕ DETAIL PRODUK ARPUL
         </h2>
     </x-slot>
 
@@ -11,7 +11,7 @@
                 <div class="p-8">
                     <!-- Back Button -->
                     <div class="mb-6">
-                        <a href="{{ route('products.index') }}" class="inline-flex items-center bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
+                        <a href="{{ route('admin.admin.products.index') }}" class="inline-flex items-center bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-2 px-4 rounded-lg transition-all duration-300">
                             ← Kembali ke Daftar Produk
                         </a>
                     </div>
@@ -60,11 +60,11 @@
 
                                 <!-- Action Buttons -->
                                 <div class="flex gap-4 pt-4">
-                                    <a href="{{ route('products.edit', $product->id) }}" 
+                                    <a href="{{ route('admin.admin.products.edit', $product->id) }}" 
                                        class="flex-1 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white font-bold py-3 px-6 rounded-lg text-center shadow-lg transform hover:scale-105 transition-all duration-300">
                                         ✏️ EDIT PRODUK
                                     </a>
-                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Yakin mau hapus produk {{ $product->name }}?')">
+                                    <form action="{{ route('admin.admin.products.destroy', $product->id) }}" method="POST" class="flex-1" onsubmit="return confirm('Yakin mau hapus produk {{ $product->name }}?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300">

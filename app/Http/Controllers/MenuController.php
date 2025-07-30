@@ -18,8 +18,13 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $products = Product::where('stock', '>', 0)->orderBy('name')->get();
+        // Ambil semua produk yang tersedia (stock > 0) dan urutkan berdasarkan nama
+        $products = Product::where('stock', '>', 0)
+                           ->orderBy('name', 'asc')
+                           ->get();
+        
         $cart = session()->get('member_cart', []);
+        
         return view('menu.index', compact('products', 'cart'));
     }
 

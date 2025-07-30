@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-brand text-3xl leading-tight text-[#F5DEB3]">
-            🧾 KASIR NOFVCKINGCOFFEE
+            🧾 KASIR ARPUL
         </h2>
     </x-slot>
 
@@ -235,7 +235,7 @@
                             <div class="bg-gradient-to-br from-[#F5DEB3] to-[#E6D3A3] overflow-hidden shadow-xl sm:rounded-lg border-2 border-[#DAA520]">
                                 <div class="p-6 max-h-[80vh] overflow-y-auto">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        @foreach($products as $product)
+                                        @forelse($products as $product)
                                             <div class="bg-[#FFF8E1] border border-[#D2B48C] rounded-lg overflow-hidden shadow-sm hover:shadow-md flex flex-col">
                                                 <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-32 object-cover">
                                                 <div class="p-3 flex-grow flex flex-col">
@@ -249,7 +249,13 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        @empty
+                                            <div class="col-span-full text-center py-12">
+                                                <div class="text-6xl mb-4">📦</div>
+                                                <h4 class="text-2xl font-bold text-[#3E2723] mb-2">Tidak Ada Produk</h4>
+                                                <p class="text-[#5D4037]">Belum ada produk yang tersedia untuk dijual.</p>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>

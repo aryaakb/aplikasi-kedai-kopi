@@ -3,139 +3,194 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Http\Requests\SimpanProdukRequest;
+use App\Http\Requests\PerbaruiProdukRequest;
+use App\Services\ProdukService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class ProductController extends Controller
 {
-    /**
-     * Menampilkan daftar semua produk dengan search, filter, dan sort.
-     */
-    public function index(Request $request)
+    protected ProdukService $produkService;
+
+    public function __construct(ProdukService $produkService)
     {
-        $query = Product::query();
-        
-        // Search functionality
-        if ($request->has('search') && !empty($request->search)) {
-            $query->where('name', 'LIKE', '%' . $request->search . '%')
-                  ->orWhere('description', 'LIKE', '%' . $request->search . '%');
+        $this->produkService = $produkService;
+    }
+
+    /**
+     * Menampilkan daftar semua produk dengan pencarian, filter, dan pengurutan.
+     *
+     * @param Request $request
+     * @return View
+     */
+    public function index(Request $request): View
+    {
+        try {
+            $products = $this->produkService->cariProduk($request);
+            $categories = $this->produkService->dapatkanKategori();
+            $statistik = $this->produkService->dapatkanStatistikProduk();
+
+            return view('products.index', compact('products', 'categories', 'statistik'));
+        } catch (Exception $e) {
+            Log::error('Gagal memuat halaman produk', [
+                'error' => $e->getMessage(),
+                'request' => $request->all()
+            ]);
+
+            return view('products.index', [
+                'products' => collect([]),
+                'categories' => collect([]),
+                'statistik' => []
+            ])->with('error', 'Terjadi kesalahan saat memuat data produk.');
         }
-        
-        // Filter by category
-        if ($request->has('category') && !empty($request->category)) {
-            $query->where('category', $request->category);
-        }
-        
-        // Sorting functionality
-        $sortBy = $request->get('sort_by', 'name');
-        $sortOrder = $request->get('sort_order', 'asc');
-        
-        $allowedSorts = ['name', 'price', 'created_at', 'stock'];
-        if (in_array($sortBy, $allowedSorts)) {
-            $query->orderBy($sortBy, $sortOrder);
-        } else {
-            $query->orderBy('name', 'asc');
-        }
-        
-        $products = $query->get();
-        $categories = Product::select('category')->distinct()->pluck('category');
-        
-        // Debug log untuk memastikan data ada
-        \Log::info('ProductController@index called. Products count: ' . $products->count());
-        
-        return view('products.index', compact('products', 'categories'));
     }
 
     /**
      * Menampilkan form untuk membuat produk baru.
+     *
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        // Mengambil semua kategori yang unik dari database untuk dropdown
-        $categories = Product::select('category')->distinct()->pluck('category');
-        
-        // Mengirim data kategori ke view
-        return view('products.create', compact('categories'));
+        try {
+            $categories = $this->produkService->dapatkanKategori();
+            return view('products.create', compact('categories'));
+        } catch (Exception $e) {
+            Log::error('Gagal memuat form tambah produk', ['error' => $e->getMessage()]);
+            
+            return view('products.create', ['categories' => collect([])])
+                ->with('error', 'Terjadi kesalahan saat memuat form.');
+        }
     }
 
     /**
      * Menyimpan produk baru ke database.
+     *
+     * @param SimpanProdukRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(SimpanProdukRequest $request): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'image_url' => 'nullable|url',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
-        
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('products', 'public');
+        try {
+            $this->produkService->simpanProduk($request->validated());
+            
+            return redirect()
+                ->route('products.index')
+                ->with('success', 'Produk berhasil ditambahkan.');
+        } catch (Exception $e) {
+            Log::error('Gagal menyimpan produk', [
+                'error' => $e->getMessage(),
+                'data' => $request->validated()
+            ]);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Gagal menyimpan produk. Silakan coba lagi.');
         }
-        
-        Product::create($data);
-        return redirect()->route('products.index')->with('success', 'Produk berhasil ditambahkan');
     }
 
     /**
      * Menampilkan detail dari satu produk.
+     *
+     * @param Product $product
+     * @return View
      */
-    public function show(Product $product)
+    public function show(Product $product): View
     {
-        return view('products.show', compact('product'));
+        try {
+            return view('products.show', compact('product'));
+        } catch (Exception $e) {
+            Log::error('Gagal memuat detail produk', [
+                'product_id' => $product->id,
+                'error' => $e->getMessage()
+            ]);
+
+            return redirect()
+                ->route('products.index')
+                ->with('error', 'Terjadi kesalahan saat memuat detail produk.');
+        }
     }
 
     /**
      * Menampilkan form untuk mengedit produk.
+     *
+     * @param Product $product
+     * @return View
      */
-    public function edit(Product $product)
+    public function edit(Product $product): View
     {
-        // Mengambil semua kategori yang unik dari database untuk dropdown
-        $categories = Product::select('category')->distinct()->pluck('category');
-        
-        // Mengirim data produk dan kategori ke view
-        return view('products.edit', compact('product', 'categories'));
+        try {
+            $categories = $this->produkService->dapatkanKategori();
+            return view('products.edit', compact('product', 'categories'));
+        } catch (Exception $e) {
+            Log::error('Gagal memuat form edit produk', [
+                'product_id' => $product->id,
+                'error' => $e->getMessage()
+            ]);
+
+            return redirect()
+                ->route('products.index')
+                ->with('error', 'Terjadi kesalahan saat memuat form edit.');
+        }
     }
 
     /**
      * Memperbarui data produk di database.
+     *
+     * @param PerbaruiProdukRequest $request
+     * @param Product $product
+     * @return RedirectResponse
      */
-    public function update(Request $request, Product $product)
+    public function update(PerbaruiProdukRequest $request, Product $product): RedirectResponse
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'image_url' => 'nullable|url',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
-        
-        if ($request->hasFile('image')) {
-            if ($product->image) {
-                Storage::disk('public')->delete($product->image);
-            }
-            $data['image'] = $request->file('image')->store('products', 'public');
+        try {
+            $this->produkService->perbaruiProduk($product, $request->validated());
+            
+            return redirect()
+                ->route('products.index')
+                ->with('success', 'Produk berhasil diperbarui.');
+        } catch (Exception $e) {
+            Log::error('Gagal memperbarui produk', [
+                'product_id' => $product->id,
+                'error' => $e->getMessage(),
+                'data' => $request->validated()
+            ]);
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'Gagal memperbarui produk. Silakan coba lagi.');
         }
-        
-        $product->update($data);
-        return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui');
     }
 
     /**
      * Menghapus produk dari database.
+     *
+     * @param Product $product
+     * @return RedirectResponse
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
-        if ($product->image) {
-            Storage::disk('public')->delete($product->image);
+        try {
+            $this->produkService->hapusProduk($product);
+            
+            return redirect()
+                ->route('admin.admin.products.index')
+                ->with('success', 'Produk berhasil dihapus.');
+        } catch (Exception $e) {
+            Log::error('Gagal menghapus produk', [
+                'product_id' => $product->id,
+                'error' => $e->getMessage()
+            ]);
+
+            return redirect()
+                ->route('admin.admin.products.index')
+                ->with('error', 'Gagal menghapus produk. Silakan coba lagi.');
         }
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus');
     }
 }

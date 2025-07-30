@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-brand text-3xl leading-tight">
-            🔧 DEBUG NOFVCKINGCOFFEE
+            🔧 DEBUG ARPUL
         </h2>
     </x-slot>
 

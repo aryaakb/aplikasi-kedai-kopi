@@ -25,7 +25,8 @@ class TransactionController extends Controller
                                     ->orderBy('created_at', 'asc')
                                     ->get();
 
-        $products = Product::orderBy('name')->get();
+        // Ambil semua produk dan urutkan berdasarkan nama
+        $products = Product::orderBy('name', 'asc')->get();
         $cart = session()->get('cart', []);
         
         return view('transactions.index', compact('products', 'cart', 'pendingOrders', 'inProgressOrders'));

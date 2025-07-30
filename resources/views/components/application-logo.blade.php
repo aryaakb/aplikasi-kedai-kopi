@@ -14,11 +14,11 @@
     <path d="M 25 45 Q 30 50 25 55" stroke="#F5DEB3" stroke-width="1.5" fill="none"/>
     
     <!-- Main text -->
-    <text x="60" y="35" style="font-family: 'Bebas Neue', cursive; font-size: 18px; letter-spacing: 2px; fill: url(#coffeeGradient);">
-        NOFVCKING
+    <text x="60" y="40" style="font-family: 'Bebas Neue', cursive; font-size: 24px; letter-spacing: 2px; fill: url(#coffeeGradient);">
+        ARPUL
     </text>
-    <text x="60" y="55" style="font-family: 'Bebas Neue', cursive; font-size: 18px; letter-spacing: 2px; fill: url(#coffeeGradient);">
-        COFFEE
+    <text x="60" y="60" style="font-family: 'Bebas Neue', cursive; font-size: 12px; letter-spacing: 1px; fill: url(#coffeeGradient);">
+        CREATIVE COMPOUND
     </text>
     
     <!-- Decorative steam -->

@@ -118,10 +118,10 @@
             <div class="max-w-7xl mx-auto px-4 py-6 text-center">
                 <div class="flex items-center justify-center space-x-2 text-[#DAA520] mb-2">
                     <span class="text-2xl">☕</span>
-                    <span class="font-brand text-xl">NOFVCKINGCOFFEE</span>
+                    <span class="font-brand text-xl">ARPUL</span>
                     <span class="text-2xl">☕</span>
                 </div>
-                <p class="text-[#F5DEB3] text-sm">Kopi tanpa drama, rasa yang jujur - sejak 2024</p>
+                <p class="text-[#F5DEB3] text-sm">Creative Coffee Compound - sejak 2020</p>
             </div>
         </footer>
     </div>

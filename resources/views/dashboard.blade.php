@@ -11,7 +11,7 @@
             <div class="bg-gradient-to-r from-[#8B4513] to-[#A0522D] overflow-visible shadow-xl sm:rounded-lg border-2 border-[#DAA520] mb-8 relative z-0">
                 <div class="p-8 text-center">
                     <div class="text-6xl mb-4">☕</div>
-                    <h3 class="font-elegant text-2xl text-[#F5DEB3] mb-2">Selamat Datang di NoFvckingCoffee</h3>
+                    <h3 class="font-elegant text-2xl text-[#F5DEB3] mb-2">Selamat Datang di Arpul</h3>
                     <p class="text-[#DAA520] font-semibold">{{ __("Anda berhasil login!") }}</p>
                     <div class="mt-4 text-[#F5DEB3] opacity-90">
                         Peran: <span class="font-bold text-[#DAA520] uppercase">{{ Auth::user()->role }}</span>

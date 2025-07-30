@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-brand text-3xl leading-tight text-[#F5DEB3]">
-            ✏️ EDIT PRODUK NOFVCKINGCOFFEE
+            ✏️ EDIT PRODUK ARPUL
         </h2>
     </x-slot>
 
@@ -15,7 +15,7 @@
                             <h3 class="font-brand text-2xl text-[#F5DEB3] mb-2">🔥 EDIT PRODUK: {{ $product->name }} 🔥</h3>
                             <p class="text-[#DAA520] text-sm">Update info produk kopi tanpa drama!</p>
                         </div>
-                        <form method="POST" action="{{ route('products.update', $product->id) }}" enctype="multipart/form-data" class="bg-[#F5DEB3] rounded-xl p-6 border-2 border-[#DAA520]">
+                        <form method="POST" action="{{ route('admin.admin.products.update', $product->id) }}" enctype="multipart/form-data" class="bg-[#F5DEB3] rounded-xl p-6 border-2 border-[#DAA520]">
                             @csrf
                             @method('PUT')
                             <div class="grid grid-cols-1 gap-6">
@@ -71,11 +71,12 @@
                                         <p class="text-sm text-[#5D4037] mt-1">Gambar saat ini</p>
                                     </div>
                                     @endif
-                                    <input type="file" name="image" id="image" accept="image/*" class="w-full text-sm text-[#2F1B14] file:mr-4 file:py-3 file:px-4 file:rounded-lg file:border-2 file:border-[#8B4513] file:text-sm file:font-semibold file:bg-[#DAA520] file:text-[#2F1B14] hover:file:bg-[#B8860B] file:transition-colors">
+                                    <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/jpg,image/gif,image/bmp,image/tiff,image/svg+xml,image/webp,image/x-icon,image/heic,image/heif" class="w-full text-sm text-[#2F1B14] file:mr-4 file:py-3 file:px-4 file:rounded-lg file:border-2 file:border-[#8B4513] file:text-sm file:font-semibold file:bg-[#DAA520] file:text-[#2F1B14] hover:file:bg-[#B8860B] file:transition-colors">
+                                    <p class="mt-2 text-sm text-[#8B4513]">📷 Format yang didukung: JPEG, PNG, JPG, GIF, BMP, TIFF, SVG, WebP, ICO, HEIC, HEIF (Maksimal 5MB)</p>
                                 </div>
 
                                 <div class="flex justify-end gap-4 pt-4">
-                                    <a href="{{ route('products.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                                    <a href="{{ route('admin.admin.products.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
                                         ❌ Batal
                                     </a>
                                     <button type="submit" class="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300">

@@ -85,20 +85,20 @@
             return nameValid && priceValid && stockValid && categoryValid && urlValid;
         }
     }">
-        <div class="py-12">
-            <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-gradient-to-br from-[#8B4513] to-[#A0522D] overflow-hidden shadow-xl sm:rounded-xl border-2 border-[#DAA520]">
-                    <div class="p-8">
-                        <div class="mb-6 text-center">
-                            <h3 class="font-brand text-2xl text-[#F5DEB3] mb-2">🔥 TAMBAH PRODUK NOFVCKINGCOFFEE 🔥</h3>
-                            <p class="text-[#DAA520] text-sm">Buat produk kopi tanpa drama yang berkualitas!</p>
+        <div class="py-6 md:py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-gradient-to-br from-[#8B4513] to-[#A0522D] overflow-hidden shadow-xl rounded-lg md:rounded-xl border-2 border-[#DAA520]">
+                    <div class="p-4 md:p-6 lg:p-8">
+                        <div class="mb-4 md:mb-6 text-center">
+                            <h3 class="font-brand text-xl md:text-2xl lg:text-3xl text-[#F5DEB3] mb-2">🔥 TAMBAH PRODUK ARPUL 🔥</h3>
+                            <p class="text-[#DAA520] text-xs md:text-sm">Buat produk kopi tanpa drama yang berkualitas!</p>
                         </div>
                         
-                        <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data" 
+                        <form method="POST" action="{{ route('admin.admin.products.store') }}" enctype="multipart/form-data" 
                               @submit="if(!validateForm()) { $event.preventDefault(); }"
-                              class="bg-[#F5DEB3] rounded-xl p-6 border-2 border-[#DAA520]">
+                              class="bg-[#F5DEB3] rounded-lg md:rounded-xl p-4 md:p-6 border-2 border-[#DAA520]">
                             @csrf
-                            <div class="grid grid-cols-1 gap-6">
+                            <div class="grid grid-cols-1 gap-4 md:gap-6">
                                 <div>
                                     <label for="name" class="block text-sm font-bold text-[#2F1B14] mb-2">☕ Nama Produk</label>
                                     <input type="text" 
@@ -139,7 +139,7 @@
                                     <textarea name="description" id="description" rows="4" class="w-full border-2 border-[#8B4513] rounded-lg shadow-sm py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] text-[#2F1B14]" placeholder="Ceritakan tentang produk ini... Contoh: Espresso murni tanpa drama, rasa yang jujur dan kuat."></textarea>
                                 </div>
 
-                                <div class="grid grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label for="price" class="block text-sm font-bold text-[#2F1B14] mb-2">💰 Harga (Rp)</label>
                                         <input type="number" 
@@ -151,9 +151,9 @@
                                                @blur="validatePrice()"
                                                @input="validatePrice()"
                                                :class="{'border-red-500': errors.price, 'border-[#8B4513]': !errors.price}"
-                                               class="w-full border-2 rounded-lg shadow-sm py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] font-semibold text-[#2F1B14]" 
+                                               class="w-full border-2 rounded-lg shadow-sm py-2 md:py-3 px-3 md:px-4 focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] font-semibold text-[#2F1B14] text-sm md:text-base" 
                                                placeholder="25000" required>
-                                        <div x-show="errors.price" x-text="errors.price" class="text-red-500 text-sm mt-1"></div>
+                                        <div x-show="errors.price" x-text="errors.price" class="text-red-500 text-xs md:text-sm mt-1"></div>
                                     </div>
 
                                     <div>
@@ -166,9 +166,9 @@
                                                @blur="validateStock()"
                                                @input="validateStock()"
                                                :class="{'border-red-500': errors.stock, 'border-[#8B4513]': !errors.stock}"
-                                               class="w-full border-2 rounded-lg shadow-sm py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] font-semibold text-[#2F1B14]" 
+                                               class="w-full border-2 rounded-lg shadow-sm py-2 md:py-3 px-3 md:px-4 focus:outline-none focus:ring-2 focus:ring-[#DAA520] focus:border-[#DAA520] font-semibold text-[#2F1B14] text-sm md:text-base" 
                                                placeholder="50" required>
-                                        <div x-show="errors.stock" x-text="errors.stock" class="text-red-500 text-sm mt-1"></div>
+                                        <div x-show="errors.stock" x-text="errors.stock" class="text-red-500 text-xs md:text-sm mt-1"></div>
                                     </div>
                                 </div>
 
@@ -189,14 +189,15 @@
 
                                 <div>
                                     <label for="image" class="block text-sm font-bold text-[#2F1B14] mb-2">📤 Atau Upload Gambar</label>
-                                    <input type="file" name="image" id="image" accept="image/*" class="w-full text-sm text-[#2F1B14] file:mr-4 file:py-3 file:px-4 file:rounded-lg file:border-2 file:border-[#8B4513] file:text-sm file:font-semibold file:bg-[#DAA520] file:text-[#2F1B14] hover:file:bg-[#B8860B] file:transition-colors">
+                                    <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/jpg,image/gif,image/bmp,image/tiff,image/svg+xml,image/webp,image/x-icon,image/heic,image/heif" class="w-full text-sm text-[#2F1B14] file:mr-4 file:py-3 file:px-4 file:rounded-lg file:border-2 file:border-[#8B4513] file:text-sm file:font-semibold file:bg-[#DAA520] file:text-[#2F1B14] hover:file:bg-[#B8860B] file:transition-colors">
+                                    <p class="mt-2 text-sm text-[#8B4513]">📷 Format yang didukung: JPEG, PNG, JPG, GIF, BMP, TIFF, SVG, WebP, ICO, HEIC, HEIF (Maksimal 5MB)</p>
                                 </div>
 
-                                <div class="flex justify-end gap-4 pt-4">
-                                    <a href="{{ route('products.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300">
+                                <div class="flex flex-col sm:flex-row sm:justify-end gap-3 md:gap-4 pt-4">
+                                    <a href="{{ route('admin.admin.products.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg transition-colors duration-300 text-center text-sm md:text-base">
                                         ❌ Batal
                                     </a>
-                                    <button type="submit" class="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300">
+                                    <button type="submit" class="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-bold py-2 md:py-3 px-4 md:px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-300 text-sm md:text-base">
                                         💾 SIMPAN PRODUK
                                     </button>
                                 </div>

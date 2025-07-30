@@ -3,41 +3,19 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Admin
-        User::firstOrCreate(
-            ['email' => 'admin@coffee.com'],
-            [
-                'name' => 'Admin',
-                'password' => Hash::make('password'),
-                'role' => 'admin'
-            ]
-        );
-
-        // Kasir
-        User::firstOrCreate(
-            ['email' => 'kasir@coffee.com'],
-            [
-                'name' => 'Kasir',
-                'password' => Hash::make('password'),
-                'role' => 'cashier'
-            ]
-        );
-
-        // Produk NoFvckingCoffee yang detail
+        // Produk Arpul Creative Compound yang detail
         $products = [
             // Signature Coffee
             [
-                'name' => 'NoFvcking Espresso',
+                'name' => 'Arpul Signature Espresso',
                 'category' => 'Signature',
-                'description' => 'Espresso murni tanpa drama, rasa yang jujur dan kuat. Perfect untuk yang butuh semangat tanpa basa-basi.',
+                'description' => 'Espresso premium dengan sentuhan kreatif Arpul, rasa yang bold dan berkarakter unik.',
                 'price' => 18000,
                 'stock' => 100,
                 'image_url' => 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400'
