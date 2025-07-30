@@ -1,4 +1,4 @@
-# No F*cking Coffee - Coffee Shop Management System
+# Arpul - Coffee Shop Management System
 
 Aplikasi manajemen kedai kopi berbasis web yang dibangun menggunakan Laravel 12 dengan sistem role-based authentication untuk mengelola operasional kedai kopi secara efisien.
 
