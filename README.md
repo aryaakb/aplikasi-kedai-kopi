@@ -1,99 +1,121 @@
-# Arpul - Coffee Shop Management System
+# Arpul – Sistem Manajemen Kedai Kopi
 
-Aplikasi manajemen kedai kopi berbasis web yang dibangun menggunakan Laravel 12 dengan sistem role-based authentication untuk mengelola operasional kedai kopi secara efisien.
+Aplikasi web berbasis Laravel 12 dengan role-based authentication untuk mengelola produk, transaksi, dan laporan operasional kedai kopi secara efisien.
 
-## 🚀 Fitur Utama
+---
 
-### 👑 Admin
-- **Manajemen Produk**: CRUD produk lengkap dengan foto, kategori, dan stok
-- **Laporan Penjualan**: Analisis pendapatan dengan filter tanggal
-- **Export Laporan**: Generate laporan PDF untuk keperluan akuntansi
-- **Dashboard Analitik**: Overview performa bisnis
+## Daftar Isi
 
-### 👨‍💼 Kasir
-- **Point of Sales (POS)**: Interface penjualan yang user-friendly
-- **Manajemen Pesanan**: Konfirmasi dan pembatalan pesanan pelanggan
-- **Cart System**: Sistem keranjang belanja dengan kalkulasi otomatis
-- **Struk Digital**: Generate receipt/struk untuk pelanggan
-- **Order Queue**: Antrian pesanan real-time
+1. [Deskripsi](#deskripsi)  
+2. [Fitur Utama](#fitur-utama)  
+3. [Teknologi](#teknologi)  
+4. [Prasyarat](#prasyarat)  
+5. [Instalasi](#instalasi)  
+6. [Menjalankan Aplikasi](#menjalankan-aplikasi)  
+7. [Akun Default](#akun-default)  
+8. [Struktur Database](#struktur-database)  
+9. [Role & Permissions](#role--permissions)  
+10. [Testing](#testing)  
+11. [Deployment](#deployment)  
+12. [Contributing](#contributing)  
+13. [License](#license)  
 
-### 👤 Member/Pelanggan
-- **Menu Digital**: Browse menu dengan gambar dan deskripsi
-- **Order Online**: Pemesanan langsung dari aplikasi
-- **Riwayat Pesanan**: Tracking order history
-- **Profile Management**: Kelola data pribadi
+---
 
-## 🛠️ Teknologi Stack
+## Deskripsi
 
-- **Backend**: Laravel 12 (PHP 8.2+)
-- **Frontend**: Blade Templates + Tailwind CSS
-- **Database**: SQLite (Development)
-- **Authentication**: Laravel Breeze
-- **PDF Generation**: DomPDF
-- **Build Tools**: Vite
+Arpul adalah sistem manajemen kedai kopi berbasis web.  
 
-## 📋 Prerequisites
+Dengan antarmuka yang bersih dan terstruktur, Arpul mendukung tiga peran utama—Admin, Kasir, dan Member—untuk menjalankan operasi mulai dari manajemen produk hingga pemrosesan transaksi dan pembuatan laporan.
 
-- PHP 8.2 atau lebih tinggi
-- Composer
-- Node.js & NPM
-- SQLite extension untuk PHP
+---
 
-## 🚀 Instalasi
+## Fitur Utama
 
-1. **Clone Repository**
+### Admin
+- CRUD produk lengkap dengan foto, kategori, stok, dan deskripsi  
+- Laporan penjualan dengan filter tanggal dan ekspor PDF  
+- Dashboard analitik real-time untuk memantau performa bisnis  
+
+### Kasir
+- Point of Sales (POS) interaktif untuk proses checkout cepat  
+- Manajemen pesanan: konfirmasi, pembatalan, dan antrian order  
+- Keranjang belanja otomatis menghitung subtotal  
+- Struk digital dalam format PDF  
+
+### Member/Pelanggan
+- Menu digital dengan gambar, deskripsi, dan harga  
+- Pemesanan online langsung dari aplikasi  
+- Riwayat pesanan dan status pembayaran  
+- Manajemen profil dan pengaturan akun  
+
+---
+
+## Teknologi
+
+- Backend: Laravel 12 (PHP ≥ 8.2)  
+- Frontend: Blade Templates + Tailwind CSS  
+- Database: SQLite (dev) & MySQL (prod)  
+- Authentication: Laravel Breeze  
+- PDF Generation: DomPDF  
+- Build Tools: Vite + npm  
+
+---
+
+## Prasyarat
+
+- PHP 8.2 atau lebih tinggi  
+- Composer  
+- Node.js & npm  
+- Ekstensi PHP untuk SQLite/MySQL  
+
+---
+
+## Instalasi
+
+1. Clone repositori  
    ```bash
    git clone <repository-url>
-   cd nofvcking-coffee
+   cd arpul-coffee
    ```
 
-2. **Install Dependencies**
+2. Install dependencies PHP dan Node  
    ```bash
    composer install
    npm install
    ```
 
-3. **Environment Setup**
+3. Salin konfigurasi dan generate application key  
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
 
-4. **Database Setup**
+4. Siapkan database SQLite dan migrasi + seeder  
    ```bash
    touch database/database.sqlite
    php artisan migrate --seed
    ```
 
-5. **Storage Link**
+5. Buat symbolic link untuk storage  
    ```bash
    php artisan storage:link
    ```
 
-6. **Build Assets**
+6. Build asset untuk produksi  
    ```bash
    npm run build
    ```
 
-## 🏃‍♂️ Menjalankan Aplikasi
+---
+
+## Menjalankan Aplikasi
 
 ### Development Mode
 ```bash
-composer run dev
-```
-Atau secara manual:
-```bash
-# Terminal 1 - Laravel Server
 php artisan serve
-
-# Terminal 2 - Queue Worker
-php artisan queue:listen
-
-# Terminal 3 - Logs
-php artisan pail
-
-# Terminal 4 - Vite
 npm run dev
+php artisan queue:work      # opsional, untuk queue worker
 ```
 
 ### Production Mode
@@ -101,89 +123,83 @@ npm run dev
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
-## 👥 Default Users
+---
 
-Setelah seeding, tersedia user default:
+## Akun Default
 
-- **Admin**: admin@coffee.com
-- **Kasir**: cashier@coffee.com  
-- **Member**: member@coffee.com
+Setelah `php artisan migrate --seed`, tiga akun berikut dibuat otomatis jika belum ada:
 
-*Password default: `password`*
+| Role   | Nama         | Email               | Password   |
+|--------|--------------|---------------------|------------|
+| Admin  | Admin Arpul  | admin@arpul.com     | admin123   |
+| Kasir  | Kasir Arpul  | kasir@arpul.com     | kasir123   |
+| Member | Demo Member  | member@arpul.com    | member123  |
 
-## 📁 Struktur Database
+Seeder file: `database/seeders/AdminUserSeeder.php`
 
-### Products
-- ID, Name, Category, Description, Price, Stock
-- Image upload & URL support
-- Timestamps
+---
 
-### Transactions  
-- ID, User, Total, Status, Payment info
-- Order number generation
-- Paid amount tracking
+## Struktur Database
 
-### Transaction Details
-- Product details per transaction
-- Quantity & price tracking
-- Subtotal calculation
+### products
+- id, name, category, description, price, stock, image_path, timestamps  
 
-### Users
-- Standard Laravel auth fields
-- Role-based access (admin/cashier/member)
+### transactions
+- id, user_id, total_amount, status, payment_method, created_at, updated_at  
 
-## 🔐 Role & Permissions
+### transaction_details
+- id, transaction_id, product_id, quantity, unit_price, subtotal, timestamps  
 
-| Fitur | Admin | Kasir | Member |
-|-------|-------|-------|--------|
-| Dashboard | ✅ | ✅ | ✅ |
-| Kelola Produk | ✅ | ❌ | ❌ |
-| Laporan | ✅ | ❌ | ❌ |
-| POS/Transaksi | ❌ | ✅ | ❌ |
-| Order Menu | ❌ | ❌ | ✅ |
-| Riwayat Order | ❌ | ❌ | ✅ |
+### users
+- id, name, email, password, role, is_active, email_verified_at, timestamps  
 
-## 🧪 Testing
+---
 
+## Role & Permissions
+
+| Fitur            | Admin | Kasir | Member |
+|------------------|:-----:|:-----:|:------:|
+| Dashboard        |   ✅   |   ✅   |   ✅    |
+| Kelola Produk    |   ✅   |   ❌   |   ❌    |
+| Lihat Laporan    |   ✅   |   ❌   |   ❌    |
+| POS/Transaksi    |   ❌   |   ✅   |   ❌    |
+| Order Menu       |   ❌   |   ❌   |   ✅    |
+| Riwayat Pesanan  |   ❌   |   ❌   |   ✅    |
+
+---
+
+## Testing
+
+Jalankan seluruh test suite:
 ```bash
 php artisan test
 ```
 
-## 📝 API Endpoints
+---
 
-### Debug/Testing Routes
-- `/debug` - Debug information
-- `/auto-login-admin` - Auto login sebagai admin (development only)
-- `/fresh-products` - Test products display
-- `/fresh-reports` - Test reports display
+## Deployment
 
-## 🚀 Deployment
-
-1. Set environment ke production
-2. Optimize aplikasi:
+1. Set environment ke production  
+2. Optimasi konfigurasi dan cache  
    ```bash
    php artisan config:cache
    php artisan route:cache
    php artisan view:cache
-   ```
-3. Set web server (Apache/Nginx) ke folder `public/`
-
-## 🤝 Contributing
-
-1. Fork repository
-2. Buat feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
-## 📄 License
-
-Project ini menggunakan [MIT License](https://opensource.org/licenses/MIT).
-
-## 📞 Support
-
-Untuk pertanyaan atau bantuan, silakan buat issue di repository ini.
+   ```  
+3. Arahkan web server (Apache/Nginx) ke folder `public/`
 
 ---
 
-*Dibuat dengan ❤️ untuk mendigitalkan operasional kedai kopi*
+## Contributing
+
+1. Fork repository  
+2. Buat branch fitur (`git checkout -b feature/YourFeature`)  
+3. Commit perubahan (`git commit -m "Add YourFeature"`)  
+4. Push ke remote (`git push origin feature/YourFeature`)  
+5. Buat Pull Request  
+
+---
+
+## License
+
+Project ini dilisensikan di bawah MIT License. Lihat [LICENSE](LICENSE) untuk detail.
