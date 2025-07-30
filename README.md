@@ -188,18 +188,6 @@ php artisan test
    ```  
 3. Arahkan web server (Apache/Nginx) ke folder `public/`
 
----
-
-## Contributing
-
-1. Fork repository  
-2. Buat branch fitur (`git checkout -b feature/YourFeature`)  
-3. Commit perubahan (`git commit -m "Add YourFeature"`)  
-4. Push ke remote (`git push origin feature/YourFeature`)  
-5. Buat Pull Request  
-
----
-
 ## License
 
 Project ini dilisensikan di bawah MIT License. Lihat [LICENSE](LICENSE) untuk detail.
